@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+
+# Environment / secrets
+.env
+.env.local
+*.local
+
+# Client build output
+Client/dist/
+
+# Logs
+*.log
