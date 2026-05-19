@@ -13,9 +13,23 @@ const pool = new POOL({
 //Create all funtions for request handler
 
 //Create a new link in the db
+const createLink = (request, response) =>{
+    // Take data the user pass to us and insert into links table(database)
+    const name = request.body.name 
+    const URL = request.body.URL
+
+    pool.query('INSERT INTO links (name, URL) VALUES ($1, $2)', [name,URL], (error,result) =>{
+        if(error){
+            throw error
+        }
+        response.status(201).send(`Link added with ID: ${result.insertId}`)
+    })
+
+}
 
 //Read all data from database
 const getLinks = (req,res) => {
+    //get back all data currently in database
     pool.query('SELECT * FROM links ORDER BY id ASC',
     (error,result) =>{
         if(error){
@@ -36,4 +50,5 @@ const getLinks = (req,res) => {
 
 module.exports = {
     getLinks,
+    createLink,
 }

@@ -40,8 +40,9 @@
  import { useState } from "react"
 import "./App.css"
 //form, Table
-import Form from "./components/Form.jsx"
-import Table from "./components/Table.jsx"
+// import Form from "./components/Form.jsx"
+// import Table from "./components/Table.jsx"
+import LinkContainer from "./components/LinkContainer.jsx"
 
 //create app componet to render as our main component
 
@@ -49,9 +50,9 @@ function App(){
 
   const [favLinks, setFavLinks] = useState([])
 
-  let handleNewSubmission = (data) => {
-    setFavLinks([...favLinks,data])
-  }
+  // let handleNewSubmission = (data) => {
+  //   setFavLinks([...favLinks,data])
+  // }
 
 
 
@@ -61,11 +62,11 @@ function App(){
 
     <div>
       <h1 className = "testClass"> Submit your fav links </h1>
+      <LinkContainer />
 
+      {/* <Form  onNewSubmit = {handleNewSubmission}/>
 
-      <Form  onNewSubmit = {handleNewSubmission}/>
-
-      <Table links = {favLinks}/>
+      <Table links = {favLinks}/> */}
 
     </div>
 
