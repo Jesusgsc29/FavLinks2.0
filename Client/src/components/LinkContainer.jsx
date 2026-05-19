@@ -87,6 +87,33 @@ function LinkContainer() {
     }
   }
 
+  //Update row with id
+  const handleUpdate = async (id, updatedData) => {
+    try {
+      setError(null)
+      const res = await fetch(`${API_BASE}/links/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: updatedData.name,
+          url: updatedData.url,
+        }),
+      })
+  
+      console.log(res)
+      if (!res.ok) {
+        throw new Error(`UPDATE failed: ${res.status}`)
+      }
+  
+      await fetchLinks()
+    } catch (err) {
+      console.error(err)
+      setError(err.message)
+      alert('Could not update link.')
+    }
+  }
+
+
   if (loading) {
     return <p>Loading links...</p>
   }
@@ -97,7 +124,7 @@ function LinkContainer() {
 
       <Form onNewSubmit={handleNewSubmission} />
 
-      <Table links={favLinks} onDelete={handleDelete} />
+      <Table links={favLinks} onDelete={handleDelete} onUpdate={handleUpdate}/>
     </div>
   )
 }

@@ -31,6 +31,7 @@ app.post('/new',db.createLink)
 app.get('/links', db.getLinks)
 
 //UPDATE
+app.put('/links/:id', db.updateLink)
 
 //DELETE
 app.delete('/links/:id', db.deleteLink)

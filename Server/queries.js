@@ -40,7 +40,25 @@ const getLinks = (req,res) => {
 }
 
 //Update link in the db
+const updateLink = (request, response) => {
+    const id = parseInt(request.params.id, 10)
+    const { name, url } = request.body
 
+    pool.query(
+      'UPDATE links SET name = $1, url = $2 WHERE id = $3 RETURNING *',
+      [name, url, id],
+      (error, result) => {
+        if (error) {
+          throw error
+        }
+        if (result.rowCount === 0) {
+          return response.status(404).json({ error: 'Link not found' })
+        }
+
+        response.status(200).json(result.rows[0])
+      }
+    )
+  }
 
 //Delete link in the db
 const deleteLink = (request, response) => {
@@ -63,4 +81,5 @@ module.exports = {
     getLinks,
     createLink,
     deleteLink,
+    updateLink,
 }
