@@ -33,6 +33,8 @@ app.get('/links', db.getLinks)
 //UPDATE
 
 //DELETE
+app.delete('/links/:id', db.deleteLink)
+
 
 //Starting Express on PORT
 app.listen(PORT, () =>{

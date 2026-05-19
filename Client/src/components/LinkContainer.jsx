@@ -52,7 +52,7 @@ function LinkContainer() {
         throw new Error(`POST /new failed: ${res.status}`)
       }
 
-      // Easiest: refetch all links after a successful create
+      // refetch all links after a successful create
       const linksRes = await fetch(`${API_BASE}/links`)
       if (!linksRes.ok) {
         throw new Error(`GET /links failed: ${linksRes.status}`)
@@ -66,6 +66,27 @@ function LinkContainer() {
     }
   }
 
+  //delete row with id 
+  const handleDelete = async (id) => {
+    try {
+      setError(null)
+      const res = await fetch(`${API_BASE}/links/${id}`, {
+        method: 'DELETE',
+      })
+      console.log(res)
+      if (!res.ok) {
+        throw new Error(`DELETE failed: ${res.status}`)
+      }
+      // refetch (matches your POST flow)
+      await fetchLinks()
+
+    } catch (err) {
+      console.error(err)
+      setError(err.message)
+      alert('Could not delete link.')
+    }
+  }
+
   if (loading) {
     return <p>Loading links...</p>
   }
@@ -75,8 +96,8 @@ function LinkContainer() {
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       <Form onNewSubmit={handleNewSubmission} />
-      
-      <Table links={favLinks} />
+
+      <Table links={favLinks} onDelete={handleDelete} />
     </div>
   )
 }

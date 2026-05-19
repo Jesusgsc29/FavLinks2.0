@@ -43,7 +43,18 @@ const getLinks = (req,res) => {
 
 
 //Delete link in the db
-
+const deleteLink = (request, response) => {
+    const id = parseInt(request.params.id, 10)
+    pool.query('DELETE FROM links WHERE id = $1', [id], (error, result) => {
+      if (error) {
+        throw error
+      }
+      if (result.rowCount === 0) {
+        return response.status(404).json({ error: 'Link not found' })
+      }
+      response.status(200).json({ message: 'Deleted', id })
+    })
+  }
 
 
 
@@ -51,4 +62,5 @@ const getLinks = (req,res) => {
 module.exports = {
     getLinks,
     createLink,
+    deleteLink,
 }
