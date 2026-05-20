@@ -4,7 +4,9 @@ import Table from "./Table.jsx"
 
 // Dev: Vite on 5173, API on 9002 → use full URL or a Vite proxy (see below)
 // Production: same origin → "" is fine (requests go to /links, /new)
-const API_BASE = import.meta.env.DEV ? "http://localhost:9002" : ""
+const API_BASE = import.meta.env.DEV
+  ? "http://localhost:9002"
+  : (import.meta.env.VITE_API_URL || "")
 
 function LinkContainer() {
   const [favLinks, setFavLinks] = useState([])

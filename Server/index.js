@@ -2,8 +2,11 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const path = require('path')
-const PORT = 9002
+const PORT = process.env.PORT || 9002
 const db = require('./queries')
+
+const cors = require('cors')
+app.use(cors())   // for class projects; tighten origin in production
 
 //Middleware
 app.use(express.json())
@@ -17,7 +20,7 @@ app.use(express.static(path.resolve(__dirname,'../Client/dist')))
 //Routes
 app.get('/',(req,res) =>{
     //will do something here 
-    res.sendFile(path.resolve(__dirname,'../Client/dist'),'index.html')
+    res.sendFile(path.resolve(__dirname,'../Client/dist/index.html'))
 })
 
 app.get('/test',(req,res) =>{
